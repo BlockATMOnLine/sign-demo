@@ -47,6 +47,9 @@ public class SignatureUtils {
      * @return
      */
     public static String concatenateProperties(Object obj) {
+        if(obj == null){
+            return "";
+        }
         List<String> propertyList = new ArrayList<>();
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
