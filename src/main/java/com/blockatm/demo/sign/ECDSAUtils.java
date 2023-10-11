@@ -4,11 +4,10 @@
 package com.blockatm.demo.sign;
 
 
-
-
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
@@ -38,7 +37,7 @@ public class ECDSAUtils {
     }
 
     public static boolean verify(String data, String signature, String publicKey) throws Exception {
-        return verify( data,  signature,  stringToPublicKey(publicKey));
+        return verify(data, signature, stringToPublicKey(publicKey));
     }
 
 

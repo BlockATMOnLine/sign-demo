@@ -21,7 +21,6 @@ public class SignTest {
         boolean checkResult = SignatureUtils.checkSignature(obj, time, signature, publickKey);
         System.out.println("your wait check sign string: " + signStr);
         System.out.println("signature check result: " + checkResult);
-
     }
 
 
