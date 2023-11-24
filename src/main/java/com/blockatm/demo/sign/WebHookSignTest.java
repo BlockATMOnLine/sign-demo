@@ -4,7 +4,7 @@ package com.blockatm.demo.sign;
  * @description test your signature by run main function
  * @date 2020-10-08 23:05
  */
-public class SignTest {
+public class WebHookSignTest {
 
     // demo test private key
     private static String privateKey = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCAaXAqWZaVeWG4zQWjAT+RqFUwMKfLIAOQQqi6a3JObrg==";

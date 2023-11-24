@@ -20,9 +20,14 @@ public class SignatureUtils {
      * @return
      */
     public static String getSignStr(Object obj, long time) {
+        if(obj instanceof String){
+            return obj + "&time=" + time;
+        }
         String s = concatenateProperties(obj);
         return s + "&time=" + time;
     }
+
+
 
     /**
      * check sign from request header
