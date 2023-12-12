@@ -1,6 +1,8 @@
 package com.blockatm.demo.sign;
 
-import java.lang.reflect.Field;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,69 +15,45 @@ import java.util.List;
 public class SignatureUtils {
 
     /**
-     * get sign string
-     *
+     * get wait sign string
      * @param obj  the request obj
      * @param time request header BlockATM-Request-Time
      * @return
      */
-    public static String getSignStr(Object obj, long time) {
-        if(obj instanceof String){
-            return obj + "&time=" + time;
-        }
-        String s = concatenateProperties(obj);
-        return s + "&time=" + time;
-    }
-
-
-
-    /**
-     * check sign from request header
-     *
-     * @param data      request data obj
-     * @param time      request header BlockATM-Request-Time
-     * @param signature request header BlockATM-Signature-V1
-     * @param publicKey your public Key
-     * @return
-     * @throws Exception
-     */
-    public static boolean checkSignature(Object data, long time, String signature, String publicKey) throws Exception {
-        String signStr = getSignStr(data, time);
-        return ECDSAUtils.verify(signStr, signature, publicKey);
-    }
-
-
-    /**
-     * Concatenate the properties of an Object by using Key=Value pairs
-     *
-     * @param obj
-     * @return
-     */
-    public static String concatenateProperties(Object obj) {
+    public static String getWaitSignString(Object obj, long time){
         if(obj == null){
-            return "";
+            return time+"";
         }
-        List<String> propertyList = new ArrayList<>();
-        Field[] fields = obj.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(obj);
-                // check field not null
-                if (value != null) {
-                    String key = field.getName();
-                    String property = key + "=" + value.toString();
-                    propertyList.add(property);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+        if(obj instanceof String){
+            return obj+"&time="+time;
+        }
+        String jsonStr = JSON.toJSONString(obj);
+        String waitSinStr = getWaitSignStr(jsonStr);
+        return waitSinStr+"&time="+time;
+    }
+
+
+
+
+
+    /**
+     * Concatenate the properties of an JSON by using Key=Value pairs
+     * @param jsonStr
+     * @return
+     */
+    private static String getWaitSignStr(String jsonStr) {
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr, JSONObject.class);
+        List<String> keys = new ArrayList<>(jsonObject.keySet());
+        Collections.sort(keys);
+        StringBuilder result = new StringBuilder();
+        for (String key : keys) {
+            String value = jsonObject.get(key).toString();
+            if (result.length() > 0) {
+                result.append("&");
             }
+            result.append(key).append("=").append(value);
         }
-        // sort property by assci
-        Collections.sort(propertyList);
-        // connect with &
-        String concatenatedProperties = String.join("&", propertyList);
-        return concatenatedProperties;
+        return result.toString();
     }
 
 

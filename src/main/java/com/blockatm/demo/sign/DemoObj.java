@@ -7,7 +7,7 @@ package com.blockatm.demo.sign;
 
 public class DemoObj {
     private Integer type = 1;
-    private Long merchantId = null;
+    private Long merchantId = 86000090l;
     private String custNo = "OrderNO_123456";
 
     private String orderNo = null;
