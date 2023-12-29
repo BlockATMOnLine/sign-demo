@@ -2,6 +2,7 @@ package com.blockatm.demo.sign;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.deploy.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,12 @@ public class SignatureUtils {
 
 
 
+    public static String joinSignStrAndTime(String message,Long time){
+        if(message == null || "".equals(message)){
+            return time.toString();
+        }
+        return new StringBuilder(message).append("&time=").append(time).toString();
+    }
 
     /**
      * Concatenate the properties of an JSON by using Key=Value pairs

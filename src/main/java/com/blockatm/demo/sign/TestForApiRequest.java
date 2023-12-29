@@ -46,11 +46,11 @@ public class TestForApiRequest {
 
         // ---------  send a request to blockATM for query contract info start -----------
 
-        privateKey = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCAaXAqWZaVeWG4zQWjAT+RqFUwMKfLIAOQQqi6a3JObrg==";
-        String path = "/api/v1/contract/contractAddtress";
+        privateKey = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCk4q7HP8mNm4tl1TuFA20x5d1yeUYSyUHL7+8LHelLtg==";
+        String path = "/api/v1/contract/payment";
         String queryParams = "chainId=5";
         //you can find the apiKey in BlockAT M setting
-        String apiKey = "414555CB-2569-4015-9F67-D0219A4E0D3E";
+        String apiKey = "C2B91AF2-EB19-486A-B978-427EB4B1903D";
         //the request time
         long time = System.currentTimeMillis();
         String waitSignString = SignatureUtils.getWaitSignString(queryParams, time);

@@ -69,8 +69,7 @@ public class TestForWebHook {
 
 
         // -----------  pyaout webhook test begin -------------------
-        String testMsg = "{\"blockId\":\"10168195\",\"chainId\":\"5\",\"contractAddress\":\"0x57609702e66d6dee9d1f3a9fab376b95b9ec9e02\",\"detailList\":[{\"amount\":\"1.00000000\",\"orderNo\":\"TX1\",\"symbol\":\"USDT\",\"toAddress\":\"0x2d7ff2dc166ae09542c749be052028e43825cde7\",\"tokenAddress\":\"0x92efdfa35c75b259375ebe0f84ee1d95db0489b6\"},{\"amount\":\"1.00000000\",\"orderNo\":\"TX2\",\"symbol\":\"USDC\",\"toAddress\":\"0x2d7ff2dc166ae09542c749be052028e43825cde7\",\"tokenAddress\":\"0x2f96275bbb4a54714ef0251226c42811fb9f98aa\"}],\"fromAddress\":\"0x8e5df55ac224db7424fa8536eda9356f44474936\",\"merchantId\":86000090,\"network\":\"ETH\",\"txId\":\"0xa85f090dc5e722177ddc2cd2d4d87467820635cf736ec1a5910997118e3d3cb6\"}";
-
+        String testMsg = "{\"blockId\":\"10168195\",\"chainId\":\"5\",\"contractAddress\":\"0x57609702e66d6dee9d1f3a9fab376b95b9ec9e02\",\"detailList\":[{\"amount\":\"1.00000000\",\"orderNo\":\"TX1\",\"symbol\":\"USDT\",\"toAddress\":\"0x2d7ff2dc166ae09542c749be052028e43825cde7\",\"tokenAddress\":\"0x92efdfa35c75b259375ebe0f84ee1d95db0489b6\"},{\"amount\":\"1.00000000\",\"orderNo\":\"TX2\",\"symbol\":\"USDC\",\"toAddress\":\"0x2d7ff2dc166ae09542c749be052028e43825cde7\",\"tokenAddress\":\"0x2f96275bbb4a54714ef0251226c42811fb9f98aa\"}],\"fromAddress\":\"0x8e5df55ac224db7424fa8536eda9356f44474936\",\"merchantId\":20,\"network\":\"ETH\",\"txId\":\"0xa85f090dc5e722177ddc2cd2d4d87467820635cf736ec1a5910997118e3d3cb6\"}";
         waitSignStr = SignatureUtils.getWaitSignString(JSONObject.parseObject(testMsg, JSONObject.class), time);
         // you can get from request header BlockATM-Signature-V1
         signature = ECDSAUtils.sign(waitSignStr, privateKey);
