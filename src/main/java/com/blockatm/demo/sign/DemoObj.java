@@ -7,7 +7,7 @@ package com.blockatm.demo.sign;
 
 public class DemoObj {
     private Integer type = 1;
-    private Long merchantId = 86000090l;
+    private Long merchantId = 20l;
     private String custNo = "OrderNO_123456";
 
     private String orderNo = null;
@@ -18,7 +18,7 @@ public class DemoObj {
     private String fee = "2";
     private String paySymbol = null;
     private Integer status = 1;
-    private String txId = "1t";
+    private String txId = "john20231229";
     private String network = "TRON";
     private String chainId = "5";
 

@@ -23,22 +23,22 @@ public class SignatureUtils {
      */
     public static String getWaitSignString(Object obj, long time){
         if(obj == null){
-            return time+"";
+            return appendTime(null,time);
         }
         if(obj instanceof String){
-            return obj+"&time="+time;
+            return appendTime((String) obj,time);
         }
         String jsonStr = JSON.toJSONString(obj);
         String waitSinStr = getWaitSignStr(jsonStr);
-        return waitSinStr+"&time="+time;
+        return appendTime(waitSinStr,time);
     }
 
 
 
 
-    public static String joinSignStrAndTime(String message,Long time){
+    public static String appendTime(String message,long time){
         if(message == null || "".equals(message)){
-            return time.toString();
+            return "time="+time;
         }
         return new StringBuilder(message).append("&time=").append(time).toString();
     }

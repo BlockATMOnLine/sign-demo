@@ -27,12 +27,9 @@ public class TestForApiRequest {
 
     public static void main(String[] args) throws Exception {
         // ---------  get key Pair start  -----------
-        // create Key Pair
         KeyPair keyPair = ECDSAUtils.generateKeyPair();
-        // get the private key,the key stored in your server
         String privateKey = ECDSAUtils.encodeToString(keyPair.getPrivate().getEncoded());
         System.out.println("private Key:"+privateKey);
-        // get the public key,the key stored in blockATM server
         String publicKey = ECDSAUtils.encodeToString(keyPair.getPublic().getEncoded());
         System.out.println("ppublic Key:"+publicKey);
 
@@ -41,31 +38,22 @@ public class TestForApiRequest {
         // ---------  get key Pair end  -----------
 
 
-
-
-
         // ---------  send a request to blockATM for query contract info start -----------
 
         privateKey = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCk4q7HP8mNm4tl1TuFA20x5d1yeUYSyUHL7+8LHelLtg==";
         String path = "/api/v1/contract/payment";
         String queryParams = "chainId=5";
-        //you can find the apiKey in BlockAT M setting
         String apiKey = "C2B91AF2-EB19-486A-B978-427EB4B1903D";
-        //the request time
         long time = System.currentTimeMillis();
         String waitSignString = SignatureUtils.getWaitSignString(queryParams, time);
         System.out.println("wait sign message:"+waitSignString);
         String signature = ECDSAUtils.sign(waitSignString,privateKey);
-        String response = HttpUtil.createGet(BLOCKATM_API_URL + path)
+        String response = HttpUtil.createGet(BLOCKATM_API_URL + path+"?"+queryParams)
                 .header(HEADER_REQUEST_APIKey,apiKey)
                 .header(HEADER_SIGNATURE, signature)
                 .header(HEADER_REQUEST_TIME, time + "")
-                .header(HEADER_RECV_WINDOW, "5000").form("chainId", 5).execute().body();
-
-
+                .header(HEADER_RECV_WINDOW, "5000").execute().body();
         System.out.println(response);
-
-
 
         // ---------  send a request to blockATM  end -----------
 
