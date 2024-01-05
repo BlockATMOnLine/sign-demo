@@ -1,6 +1,7 @@
 package com.blockatm.demo.sign;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.deploy.util.StringUtils;
 
@@ -49,18 +50,50 @@ public class SignatureUtils {
      * @return
      */
     private static String getWaitSignStr(String jsonStr) {
-        JSONObject jsonObject = JSONObject.parseObject(jsonStr, JSONObject.class);
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        StringBuilder result = new StringBuilder();
+        sortJsonObject(jsonObject, result);
+        return result.toString();
+    }
+
+    private static void sortJsonObject(JSONObject jsonObject, StringBuilder result) {
         List<String> keys = new ArrayList<>(jsonObject.keySet());
         Collections.sort(keys);
-        StringBuilder result = new StringBuilder();
         for (String key : keys) {
-            String value = jsonObject.get(key).toString();
-            if (result.length() > 0) {
-                result.append("&");
+            Object value = jsonObject.get(key);
+            if(value == null){
+                continue;
             }
-            result.append(key).append("=").append(value);
+            if (value instanceof JSONObject) {
+                sortJsonObject((JSONObject) value, result);
+            } else if (value instanceof JSONArray) {
+                sortJsonArray((JSONArray) value, result);
+            } else {
+                if (result.length() > 0) {
+                    result.append("&");
+                }
+                result.append(key).append("=").append(value);
+            }
         }
-        return result.toString();
+    }
+
+    private static void sortJsonArray(JSONArray jsonArray, StringBuilder result) {
+        for (int i = 0; i < jsonArray.size(); i++) {
+            Object value = jsonArray.get(i);
+            if(value == null){
+                continue;
+            }
+            if (value instanceof JSONObject) {
+                sortJsonObject((JSONObject) value, result);
+            } else if (value instanceof JSONArray) {
+                sortJsonArray((JSONArray) value, result);
+            } else {
+                if (result.length() > 0) {
+                    result.append("&");
+                }
+                result.append(value);
+            }
+        }
     }
 
 
